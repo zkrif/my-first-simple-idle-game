@@ -1,0 +1,63 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100dvw;
+    height: 100dvh;
+    background-color: #111;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    height: 100%;
+    margin: 0 auto;
+    background-color: #eaeaea;
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.scoreboard {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* border: 1px solid black; */
+    padding: 10px 15px;
+}
+
+.coin {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.coin img {
+    width: clamp(32px, 9vw, 40px);
+    height: clamp(32px, 9vw, 40px);
+}
+
+#click-area {
+    width: 100%;
+    height: clamp(200px, 60vw, 280px);  
+    border: 1px dashed black;
+}
+
+.upgrade-income {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

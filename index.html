@@ -4,8 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Idle Game</title>
+
+    <link rel="stylesheet" href="src/css/main.css">
 </head>
 <body>
-    
+    <div class="container">
+        <div class="scoreboard">
+            <div class="coin">
+                <img src="src/assets/icons/coin.png" alt="coin.png">
+                <div id="coin-amount"></div>
+            </div>
+        </div>
+
+        <div id="click-area"></div>
+
+        <div class="upgrade-income">
+            <div class="left">
+                <div class="heading">upgrade income</div>
+                <div class="text-content">
+                    <span>increase income</span>
+                    <span id="increment-level"></span>
+                    <span id="increment-amount"></span>
+                </div>
+            </div>
+            <div class="right">
+                <button id="upgrade-income-button">
+                    <span>upgrade</span>
+                    <span id="increment-price"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="src/js/main.js"></script>
 </body>
 </html>
