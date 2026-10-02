@@ -9,6 +9,8 @@ import updateUI from "./ui/updateUI.js";
 // Variable and DOM Declaration
 const clickArea = document.getElementById("click-area");
 const upIncomeBtn = document.getElementById("upgrade-income-button");
+const navList = document.querySelectorAll(".nav-list");
+const content = document.querySelectorAll(".content");
 
 const uiElements = {
   coinAmount: document.getElementById("coin-amount"),
@@ -28,7 +30,7 @@ let data = JSON.parse(localStorage.getItem("data")) || {
 clickArea.addEventListener("pointerdown", () => {
   data.coin += data.increment;
   saveGame(data);
-//   console.log(data);
+  //   console.log(data);
   updateUI(uiElements, data);
 });
 
@@ -41,6 +43,22 @@ upIncomeBtn.addEventListener("click", () => {
     // console.log(data);
     updateUI(uiElements, data);
   }
+});
+
+navList.forEach((element, index) => {
+  element.addEventListener("click", () => {
+    content.forEach((element) => {
+      element.classList.remove("show-content");
+    });
+
+    content[index].classList.add("show-content");
+
+    navList.forEach((element) => {
+      element.classList.remove("nav-active");
+    });
+
+    navList[index].classList.add("nav-active");
+  });
 });
 
 // console.log(data);
