@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    user-select: none;
 }
 
 body {
@@ -59,7 +60,16 @@ header {
     gap: 10px;
 }
 
-.coin img {
+.power {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+
+.scoreboard > div img {
     width: clamp(32px, 9vw, 40px);
     height: clamp(32px, 9vw, 40px);
     object-fit: contain;
