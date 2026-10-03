@@ -75,6 +75,14 @@ header {
   object-fit: contain;
 }
 
+#coin-per-sec {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(10px, 3vw, 14px);
+}
+
 #click-area {
   width: 100%;
   height: clamp(200px, 60vw, 280px);

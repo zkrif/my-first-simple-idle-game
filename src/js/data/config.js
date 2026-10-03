@@ -63,3 +63,22 @@ export const getGoldPrice = (upgradeData, data) => {
     upgradeData.basePrice * Math.pow(1.17, data.goldUpLevel[upgradeData.id] - 1),
   );
 };
+
+export const rankRequirement = [
+  {
+    gold: 10000,
+    power: 2000,
+  },
+  {
+    gold: 50000,
+    power: 10000,
+  },
+  {
+    gold: 500000,
+    power: 100000,
+  },
+  {
+    gold: 1500000,
+    power: 300000,
+  }
+]

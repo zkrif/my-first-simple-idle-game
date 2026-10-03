@@ -40,7 +40,7 @@ const renderUpgradeCard = (container, upgradeData, data, getPrice) => {
         cards.push(card);
     });
 
-    console.log(cards);
+    // console.log(cards);
 
     return {cards, goldInfo};
 }

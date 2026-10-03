@@ -2,7 +2,9 @@
 // 1. click for income
 // 2. upgrade increment per click
 // 3. navigation
-// 4. upgrade power and automatic rendering power up card
+// 4. automatic rendering power up card
+// 5. upgrade power
+// 6. gold upgrade, gold increment per sec
 
 import {
   getGoldPrice,
@@ -10,9 +12,17 @@ import {
   getPowerPrice,
   goldUpgrade,
   powerUpgrade,
+  rankRequirement,
 } from "./data/config.js";
 import { saveGame } from "./data/control.js";
-import updateUI from "./ui/updateUI.js";
+import {
+  updateUI,
+  updateCoin,
+  updateCoinPerSec,
+  updateIncrement,
+  updatePower,
+  updateRankProgress,
+} from "./ui/updateUI.js";
 import renderUpgradeCard from "./ui/upgradeCard.js";
 
 // Variable and DOM Declaration
@@ -24,20 +34,29 @@ const powerUp = document.getElementById("power-up");
 const goldUp = document.getElementById("gold-up");
 const navUpList = document.querySelectorAll(".nav-upgrade-list");
 const upContent = document.querySelectorAll(".upgrade-content");
+const upRankButton = document.getElementById("up-rank-button");
 
 const uiElements = {
   coinAmount: document.getElementById("coin-amount"),
+  coinPerSec: document.getElementById("coin-per-sec"),
   increment: {
     amount: document.getElementById("increment-amount"),
     level: document.getElementById("increment-level"),
     price: document.getElementById("increment-price"),
   },
   powerAmount: document.getElementById("power-amount"),
+  goldRequirement: document.getElementById("gold-requirement"),
+  powerRequirement: document.getElementById("power-requirement"),
+  progress: {
+    gold: document.getElementById("gold-progress"),
+    power: document.getElementById("power-progress"),
+  },
 };
 
 let data = JSON.parse(localStorage.getItem("data")) || {
   coin: 0,
-  increment: 200,
+  cps: 0,
+  increment: 1,
   power: 0,
   powerUpLevel: {
     1: 1,
@@ -50,6 +69,7 @@ let data = JSON.parse(localStorage.getItem("data")) || {
     3: 1,
     4: 1,
   },
+  rankLevel: 1,
 };
 
 // event
@@ -63,7 +83,8 @@ clickArea.addEventListener("pointerdown", () => {
 
   saveGame(data);
   //   console.log(data);
-  updateUI(uiElements, data);
+  updateCoin(uiElements, data);
+  updateRankProgress(uiElements, data);
 });
 
 upIncomeBtn.addEventListener("click", () => {
@@ -73,7 +94,7 @@ upIncomeBtn.addEventListener("click", () => {
     data.increment++;
     saveGame(data);
     // console.log(data);
-    updateUI(uiElements, data);
+    updateIncrement(uiElements, data);
   }
 });
 
@@ -120,7 +141,8 @@ renderedPowerCards.cards.forEach((element, index) => {
         ".gold-info-for-up",
       ).textContent = data.coin;
       saveGame(data);
-      updateUI(uiElements, data);
+      updatePower(uiElements, data);
+      updateRankProgress(uiElements, data);
     }
   });
 });
@@ -134,14 +156,28 @@ const renderedGoldCards = renderUpgradeCard(
 
 renderedGoldCards.cards.forEach((element, index) => {
   const goldUpBtn = element.querySelector(".upgrade-up-button");
-  const goldUpLevel = element.querySelector(".up-level");
+  const goldLevel = element.querySelector(".up-level");
   const goldUpPrice = element.querySelector(".up-price");
 
   goldUpBtn.addEventListener("click", () => {
-    console.log(`goldUpBtn[${index}] di klik`);
-    data.goldUpLevel[goldUpgrade[index].id]++;
-    goldUpLevel.textContent = data.goldUpLevel[goldUpgrade[index].id];
-    goldUpPrice.textContent = getGoldPrice(goldUpgrade[index], data);
+    let price = getGoldPrice(goldUpgrade[index], data);
+    if (data.coin >= price) {
+      data.coin -= price;
+      // console.log(`goldUpBtn[${index}] di klik`);
+      data.goldUpLevel[goldUpgrade[index].id]++;
+      goldLevel.textContent = data.goldUpLevel[goldUpgrade[index].id];
+      goldUpPrice.textContent = getGoldPrice(goldUpgrade[index], data);
+      renderedPowerCards.goldInfo.querySelector(
+        ".gold-info-for-up",
+      ).textContent = data.coin;
+      renderedGoldCards.goldInfo.querySelector(
+        ".gold-info-for-up",
+      ).textContent = data.coin;
+      data.cps += goldUpgrade[index].amount;
+      saveGame(data);
+      updateCoinPerSec(uiElements, data);
+      updateRankProgress(uiElements, data);
+    }
   });
 });
 
@@ -154,5 +190,24 @@ navUpList.forEach((element, index) => {
   });
 });
 
+upRankButton.addEventListener("click", () => {
+  if (
+    data.coin >= rankRequirement[data.rankLevel - 1].gold &&
+    data.power >= rankRequirement[data.rankLevel - 1].power
+  ) {
+    data.rankLevel++;
+    saveGame(data);
+    updateRankProgress(uiElements, data);
+  }
+});
+
 // console.log(data);
+
+setInterval(() => {
+  data.coin += data.cps;
+  saveGame(data);
+  updateCoin(uiElements, data);
+  updateRankProgress(uiElements, data)
+}, 1000);
+
 updateUI(uiElements, data);
