@@ -35,3 +35,31 @@ export const getPowerPrice = (upgradeData, data) => {
     upgradeData.basePrice * Math.pow(upgradeData.priceGrowth, data.powerUpLevel[upgradeData.id] - 1),
   );
 };
+
+export const goldUpgrade = [
+  {
+    id : "1",
+    amount: 5,
+    basePrice: 2500,
+  },
+  {
+    id : "2",
+    amount: 25,
+    basePrice: 12000,
+  },
+  {
+    id : "3",
+    amount: 150,
+    basePrice: 70000,
+  },
+  {
+    id : "4",
+    amount: 1200,
+    basePrice: 500000,
+  }
+]
+export const getGoldPrice = (upgradeData, data) => {
+  return Math.round(
+    upgradeData.basePrice * Math.pow(1.17, data.goldUpLevel[upgradeData.id] - 1),
+  );
+};

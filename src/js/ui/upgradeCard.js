@@ -1,22 +1,22 @@
 import { getPowerPrice } from "../data/config.js";
 
-const createUpgradeCards = (upgradeData, data) => {
+const createUpgradeCards = (upgradeData, data, getPrice) => {
   const card = document.createElement("div");
-  card.className = "upgrade-power";
+  card.className = "upgrade-card-container";
 
   card.innerHTML = `
     <div class="left">
-        <div class="heading">upgrade power</div>
+        <div class="heading">upgrade</div>
             <div class="text-content">
                 <span>increase income</span>
-                <span class="power-level">${data.powerUpLevel[upgradeData.id]}</span>
-                <span class="power-amount">${upgradeData.amount}</span>
+                <span class="up-level">${data.powerUpLevel[upgradeData.id]}</span>
+                <span class="up-amount">${upgradeData.amount}</span>
             </div>
         </div>
     <div class="right">
-        <button class="upgrade-power-button">
+        <button class="upgrade-up-button">
             <span>upgrade</span>
-            <span class="power-price">${getPowerPrice(upgradeData, data)}</span>
+            <span class="up-price">${getPrice(upgradeData, data)}</span>
         </button>
     </div>
     `;
@@ -24,18 +24,25 @@ const createUpgradeCards = (upgradeData, data) => {
   return card;
 };
 
-const renderUpgradeCard = (container, upgradeData, data) => {
+const renderUpgradeCard = (container, upgradeData, data, getPrice) => {
     const cards = [];
 
+    const goldInfo = document.createElement("div")
+    goldInfo.className = "gold-info-for-up"
+    goldInfo.innerHTML = `
+    <img src="src/assets/icons/coin.png" alt="coin.png">
+    <div class="gold-info-for-up">${data.coin}</div>`;
+    container.appendChild(goldInfo);
+
     upgradeData.forEach(element => {
-        const card = createUpgradeCards(element, data);
+        const card = createUpgradeCards(element, data, getPrice);
         container.appendChild(card);
         cards.push(card);
     });
 
     console.log(cards);
 
-    return cards;
+    return {cards, goldInfo};
 }
 
 export default renderUpgradeCard;
