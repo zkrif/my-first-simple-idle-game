@@ -73,7 +73,23 @@ let data = JSON.parse(localStorage.getItem("data")) || {
 };
 
 // event
-clickArea.addEventListener("pointerdown", () => {
+clickArea.addEventListener("pointerdown", (e) => {
+  let positionX = e.clientX;
+  let positionY = e.clientY;
+
+  const createClickEffect = document.createElement("div");
+  createClickEffect.classList.add("click-effect");
+  createClickEffect.style.position = "fixed";
+  createClickEffect.style.top = `${positionY}px`;
+  createClickEffect.style.left = `${positionX}px`;
+  createClickEffect.textContent = `+${data.increment}`;
+  // console.log(createClickEffect);
+  clickArea.appendChild(createClickEffect);
+
+  setTimeout(() => {
+    clickArea.removeChild(createClickEffect);
+  }, 500);
+
   data.coin += data.increment;
 
   renderedPowerCards.goldInfo.querySelector(".gold-info-for-up").textContent =
@@ -142,6 +158,7 @@ renderedPowerCards.cards.forEach((element, index) => {
       ).textContent = data.coin;
       saveGame(data);
       updatePower(uiElements, data);
+      updateCoinPerSec(uiElements, data);
       updateRankProgress(uiElements, data);
     }
   });
@@ -207,7 +224,11 @@ setInterval(() => {
   data.coin += data.cps;
   saveGame(data);
   updateCoin(uiElements, data);
-  updateRankProgress(uiElements, data)
+  renderedPowerCards.goldInfo.querySelector(".gold-info-for-up").textContent =
+    data.coin;
+  renderedGoldCards.goldInfo.querySelector(".gold-info-for-up").textContent =
+    data.coin;
+  updateRankProgress(uiElements, data);
 }, 1000);
 
 updateUI(uiElements, data);

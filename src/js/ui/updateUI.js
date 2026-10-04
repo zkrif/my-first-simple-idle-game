@@ -2,7 +2,7 @@ import { getIncrementPrice, rankRequirement } from "../data/config.js";
 
 export const updateCoin = (uiElements, data) => {
   uiElements.coinAmount.textContent = `${data.coin}`;
-//   localStorage.clear();
+  // localStorage.clear();
 };
 
 export const updatePower = (uiElements, data) => {

@@ -1,3 +1,21 @@
+/* Game-Title, Screen Title, Button, Item Name, Recource Number */
+@font-face {
+  font-family: Nunito-Sans;
+  src: url("../assets/fonts/NunitoSans-VariableFont_YTLC\,opsz\,wdth\,wght.ttf");
+}
+
+@font-face {
+  font-family: Merriweather-Sans;
+  src: url(../assets/fonts/MerriweatherSans-VariableFont_wght.ttf);
+}
+
+@font-face {
+  font-family: Inter;
+  src: url("../assets/fonts/Inter-VariableFont_opsz\,wght.ttf");
+}
+
+/* description */
+
 * {
   margin: 0;
   padding: 0;
@@ -14,20 +32,27 @@ body {
 .container {
   width: 100%;
   max-width: 500px;
+  /* aspect-ratio: 9/16; */
   height: 100%;
   margin: 0 auto;
-  background-color: #eaeaea;
+  background-color: #0a1630;
   padding: 0 10px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
+  color: #e6f0ff;
+  background-image: url(../assets/background/container-bg.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 header {
   width: 100%;
   height: max-content;
+  flex-shrink: 0;
 }
 
 .content {
@@ -37,8 +62,15 @@ header {
   align-items: center;
   flex: 1;
   width: 100%;
+  min-height: 0;
+  overflow-y: auto;
   display: none;
+  scrollbar-width: none;
   /* border: 1px solid black; */
+}
+
+.content > * {
+  flex-shrink: 0;
 }
 
 .scoreboard {
@@ -49,6 +81,14 @@ header {
   align-items: center;
   /* border: 1px solid black; */
   padding: 10px 0;
+  font-weight: bold;
+  font-family: Nunito-Sans;
+  font-weight: 800;
+  font-size: clamp (16px,4.5vw,20px);
+}
+
+.scoreboard > div {
+  flex: 1;
 }
 
 .coin {
@@ -70,23 +110,80 @@ header {
 }
 
 .scoreboard > div img {
-  width: clamp(32px, 9vw, 40px);
-  height: clamp(32px, 9vw, 40px);
+  width: clamp(46px, 12vw, 52px);
+  height: clamp(46px, 12vw, 52px);
   object-fit: contain;
 }
 
 #coin-per-sec {
+  font-family: Inter;
+  color: #39FF14;
+  font-weight: 500px;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: clamp(10px, 3vw, 14px);
+  font-size: clamp(8px, 2.5vw, 12px);
+  padding-block: 2px;
 }
 
 #click-area {
   width: 100%;
-  height: clamp(200px, 60vw, 280px);
-  border: 1px dashed black;
+  aspect-ratio: 16 / 9;
+  border: 0.5px dashed #e6f0ff;
+  background-image: url(../assets/background/click-bg.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Inter;
+  font-weight: bold;
+  font-size: clamp(14px, 4vw, 20px);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.click-effect {
+  font-size: clamp(6px, 2vw, 12px);
+  color: #39FF14;
+  animation: fadeUp 0.5s linear;
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-10px, -200%) scale(0.9);
+    opacity: 0.8;
+  }
+}
+
+#click-area span {
+  animation: floatingAnimation 2.3s ease-in-out forwards infinite;
+}
+
+@keyframes floatingAnimation {
+  0% {
+    transform: translateY(4px);
+    opacity: 0.8;
+    color: #ffd545;
+    text-shadow: 0 0 10px #ffd54f;
+  }
+  50% {
+    transform: translateY(-4px) scale(1.05);
+    opacity: 1;
+    color: #ffd54580;
+    text-shadow: 0 0 10px #ffd54f80;
+  }
+  100% {
+    transform: translateY(4px);
+    opacity: 0.8;
+    color: #ffd545;
+    text-shadow: 0 0 10px #ffd54f;
+  }
 }
 
 .upgrade-income {
@@ -95,6 +192,39 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 20px;
+  padding-block: 10px;
+  border: 5px solid #1e2a44 ;
+  padding-inline: 10px;
+  background: #2e3e5c30;
+  backdrop-filter: blur(2px);
+  gap: 10px;
+}
+
+.left {
+  height: 100%;
+  text-align: justify;
+}
+
+.right {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+#increment-level, #increment-amount {
+  font-size: clamp(8px, 2.5vw, 12px)!important;
+  font-weight: bold;
+}
+
+.up-income-status {
+  font-family: Inter;
+  display: flex;
+  flex-direction: column;
+  color: #39FF14;
 }
 
 .upgrade-income .text-content {
@@ -105,6 +235,7 @@ header {
 }
 
 #upgrade-income-button {
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -112,6 +243,8 @@ header {
   padding: 5px 12px;
   font-size: clamp(8px, 3vw, 14px);
   cursor: pointer;
+  padding-inline: 20px;
+  font-family: Nunito-Sans;
 }
 
 /* upgrades */
@@ -165,6 +298,7 @@ header {
 footer {
   width: 100%;
   height: max-content;
+  flex-shrink: 0;
 }
 
 footer nav {
@@ -187,10 +321,25 @@ footer .nav-list {
 .heading {
   font-weight: bold;
   font-size: clamp(24px, 7vw, 32px);
+  font-family: Merriweather-Sans;
+  font-weight: 600;
+  color: #ffd545!important;
+  text-transform: capitalize;
+  color: #ffffff;
 }
 
 .text-content {
-  font-size: clamp(8px, 3vw, 16px);
+  font-size: clamp(8px, 2.5vw, 14px);
+  font-family: Inter;
+  text-transform: initial;
+}
+
+.text-content::first-letter {
+  text-transform: uppercase;
+}
+
+.text-content > *::first-letter {
+  text-transform: uppercase;
 }
 
 /* display manipulation */
