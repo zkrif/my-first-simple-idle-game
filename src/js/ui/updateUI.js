@@ -2,7 +2,6 @@ import { getIncrementPrice, rankRequirement } from "../data/config.js";
 
 export const updateCoin = (uiElements, data) => {
   uiElements.coinAmount.textContent = `${data.coin}`;
-  // localStorage.clear();
 };
 
 export const updatePower = (uiElements, data) => {
@@ -30,10 +29,19 @@ export const updateRankProgress = (uiElements, data) => {
   progress.power.max = rankRequirement[data.rankLevel - 1].power;
 };
 
+export const updateProfile = (data) => {
+  const name = document.getElementById("name");
+  const inputName = document.getElementById("input-name");
+  data.playerName = inputName.value == "" ? "player" : inputName.value;
+  inputName.value = "";
+  name.textContent = data.playerName;
+};
+
 export const updateUI = (uiElements, data) => {
-    updateCoin(uiElements, data);
-    updatePower(uiElements, data);
-    updateIncrement(uiElements, data);
-    updateCoinPerSec(uiElements, data);
-    updateRankProgress(uiElements, data);
+  updateProfile(data);
+  updateCoin(uiElements, data);
+  updatePower(uiElements, data);
+  updateIncrement(uiElements, data);
+  updateCoinPerSec(uiElements, data);
+  updateRankProgress(uiElements, data);
 };

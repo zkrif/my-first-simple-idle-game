@@ -526,3 +526,22 @@ button:disabled {
   gap: clamp(8px,2.5vw,12px);
   display: none;
 }
+
+.reset-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url(../assets/background/container-bg.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(8px,2.5vw,12px);
+  text-align: center;
+  display: none;
+}

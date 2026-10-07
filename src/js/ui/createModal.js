@@ -15,3 +15,21 @@ export const createEditNameModal = () => {
 
     return editNameModal;
 }
+
+export const createConfirmResetModal = () => {
+    const resetModal = document.createElement("div");
+    resetModal.className = "reset-modal"
+
+    resetModal.innerHTML = `
+    <div class="text-content">
+        are you sure to reset the game? (this action cannot be undo)
+    </div>
+    <div class="confirm-edit">
+        <button id="back-reset">back</button>
+        <button id="confirm-reset">confirm</button>
+    </div>
+    `
+    document.querySelector(".container").appendChild(resetModal);
+
+    return resetModal;
+}

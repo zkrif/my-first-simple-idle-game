@@ -5,6 +5,8 @@
 // 4. automatic rendering power up card
 // 5. upgrade power
 // 6. gold upgrade, gold increment per sec
+// 7. profile
+// 8. reset game
 
 import {
   getGoldPrice,
@@ -14,8 +16,11 @@ import {
   powerUpgrade,
   rankRequirement,
 } from "./data/config.js";
-import { checkBtnCondition, saveGame } from "./data/control.js";
-import { createEditNameModal } from "./ui/createModal.js";
+import { checkBtnCondition, resetGame, saveGame } from "./data/control.js";
+import {
+  createConfirmResetModal,
+  createEditNameModal,
+} from "./ui/createModal.js";
 import {
   updateUI,
   updateCoin,
@@ -23,6 +28,7 @@ import {
   updateIncrement,
   updatePower,
   updateRankProgress,
+  updateProfile,
 } from "./ui/updateUI.js";
 import renderUpgradeCard from "./ui/upgradeCard.js";
 
@@ -36,8 +42,8 @@ const goldUp = document.getElementById("gold-up");
 const navUpList = document.querySelectorAll(".nav-upgrade-list");
 const upContent = document.querySelectorAll(".upgrade-content");
 const upRankButton = document.getElementById("up-rank-button");
-const name = document.getElementById("name");
 const editNameBtn = document.getElementById("edit-name-button");
+const resetBtn = document.getElementById("reset-button");
 
 const uiElements = {
   coinAmount: document.getElementById("coin-amount"),
@@ -232,7 +238,6 @@ upRankButton.addEventListener("click", () => {
 const editNameModal = createEditNameModal();
 // console.log(editNameModal)
 const backEditNameBtn = document.getElementById("back-confirm");
-const inputName = document.getElementById("input-name");
 const confirmButton = document.getElementById("confirm");
 
 editNameBtn.addEventListener("click", () => {
@@ -245,10 +250,26 @@ backEditNameBtn.addEventListener("click", () => {
 
 confirmButton.addEventListener("click", () => {
   editNameModal.classList.toggle("show-content");
+  updateProfile(data);
+});
 
-  data.playerName = inputName.value == "" ? "player" : inputName.value;
-  inputName.value = "";
-  name.textContent = data.playerName;
+const confirmResetModal = createConfirmResetModal();
+const backResetBtn = document.getElementById("back-reset");
+const confirmResetBtn = document.getElementById("confirm-reset");
+
+resetBtn.addEventListener("click", () => {
+  confirmResetModal.classList.toggle("show-content");
+});
+
+backResetBtn.addEventListener("click", () => {
+  confirmResetModal.classList.toggle("show-content");
+});
+
+confirmResetBtn.addEventListener("click", () => {
+  data = resetGame();
+  saveGame(data);
+  updateUI(uiElements, data);
+  confirmResetModal.classList.toggle("show-content");
 });
 
 setInterval(() => {
