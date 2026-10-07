@@ -13,7 +13,7 @@ export const updateIncrement = (uiElements, data) => {
   const { increment } = uiElements;
   increment.amount.textContent = `(+${data.increment}/click)`;
   increment.level.textContent = `level ${data.increment}`;
-  increment.price.textContent = getIncrementPrice(data);
+  increment.price.textContent = `(${getIncrementPrice(data)})`;
 };
 
 export const updateCoinPerSec = (uiElements, data) => {

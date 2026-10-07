@@ -82,3 +82,4 @@ export const rankRequirement = [
     power: 300000,
   }
 ]
+

@@ -9,7 +9,16 @@
   </head>
   <body>
     <div class="container">
-      <header>ini header</header>
+      <header>
+        <div class="header-left">
+          <img src="src/assets/icons/avatar.png" alt="avatar">
+          <div id="name">default</div>
+          <button id="edit-name-button">edit name</button>
+        </div>
+        <div class="header-right">
+          <button id="reset-button">reset game</button>
+        </div>
+      </header>
       <div class="content show-content">
         <div class="scoreboard">
           <div class="coin">
@@ -24,7 +33,7 @@
         <div id="coin-per-sec"></div>
         <div id="click-area"><span>tap here !!</span></div>
         <div class="upgrade-income">
-          <div class="left">
+          <div class="above">
             <div class="heading">upgrade income</div>
             <div class="text-content">
               <span
@@ -33,34 +42,33 @@
               >
             </div>
           </div>
-          <div class="right">
-            <button id="upgrade-income-button">
-              <span>upgrade</span>
-              <span id="increment-price"></span>
-            </button>
+          <div class="bottom">
             <div class="up-income-status">
               <span id="increment-level"></span>
               <span id="increment-amount"></span>
             </div>
+            <button id="upgrade-income-button" disabled>
+              <span>upgrade</span>
+              <span id="increment-price"></span>
+            </button>
           </div>
         </div>
         <div class="upgrade-rank">
-          <div class="up-rank-left">
+          <div class="up-rank-top">
             <div class="heading">upgrade rank</div>
-            <div class="text">
+            <div class="text-content">
               coin requirements <span id="gold-requirement"></span>
             </div>
             <progress value="0" max="100" id="gold-progress"></progress>
-            <div class="text">
+            <div class="text-content">
               power requirements <span id="power-requirement"></span>
             </div>
             <progress value="0" max="100" id="power-progress"></progress>
           </div>
-          <div class="up-rank-right">
-            <button id="up-rank-button">upgrade</button>
+          <div class="up-rank-bottom">
+            <button id="up-rank-button" disabled>upgrade</button>
           </div>
         </div>
-        <div style="height: 1200px"></div>
       </div>
       <div class="content">
         <div class="nav-upgrade">
@@ -77,11 +85,26 @@
       <div class="content">coming soon</div>
       <footer>
         <nav>
-          <div class="nav-list nav-active">kingdom</div>
-          <div class="nav-list">upgrades</div>
-          <div class="nav-list">dynasty</div>
-          <div class="nav-list">store</div>
-          <div class="nav-list">inventory</div>
+          <div class="nav-list nav-active">
+            <img src="src/assets/icons/kingdom.png" alt="" />
+            kingdom
+          </div>
+          <div class="nav-list">
+            <img src="src/assets/icons/upgrade.png" alt="" />
+            upgrades
+          </div>
+          <div class="nav-list">
+            <img src="src/assets/icons/dynasty.png" alt="" />
+            dynasty
+          </div>
+          <div class="nav-list">
+            <img src="src/assets/icons/shop.png" alt="" />
+            shop
+          </div>
+          <div class="nav-list">
+            <img src="src/assets/icons/inventory.png" alt="" />
+            inventory
+          </div>
         </nav>
       </footer>
     </div>

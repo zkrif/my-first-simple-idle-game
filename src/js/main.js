@@ -14,7 +14,8 @@ import {
   powerUpgrade,
   rankRequirement,
 } from "./data/config.js";
-import { saveGame } from "./data/control.js";
+import { checkBtnCondition, saveGame } from "./data/control.js";
+import { createEditNameModal } from "./ui/createModal.js";
 import {
   updateUI,
   updateCoin,
@@ -35,6 +36,8 @@ const goldUp = document.getElementById("gold-up");
 const navUpList = document.querySelectorAll(".nav-upgrade-list");
 const upContent = document.querySelectorAll(".upgrade-content");
 const upRankButton = document.getElementById("up-rank-button");
+const name = document.getElementById("name");
+const editNameBtn = document.getElementById("edit-name-button");
 
 const uiElements = {
   coinAmount: document.getElementById("coin-amount"),
@@ -54,6 +57,7 @@ const uiElements = {
 };
 
 let data = JSON.parse(localStorage.getItem("data")) || {
+  playerName: "player",
   coin: 0,
   cps: 0,
   increment: 1,
@@ -74,6 +78,7 @@ let data = JSON.parse(localStorage.getItem("data")) || {
 
 // event
 clickArea.addEventListener("pointerdown", (e) => {
+  checkBtnCondition(data);
   let positionX = e.clientX;
   let positionY = e.clientY;
 
@@ -101,12 +106,14 @@ clickArea.addEventListener("pointerdown", (e) => {
   //   console.log(data);
   updateCoin(uiElements, data);
   updateRankProgress(uiElements, data);
+  checkBtnCondition(data);
 });
 
 upIncomeBtn.addEventListener("click", () => {
   let incrementPrice = getIncrementPrice(data);
   if (data.coin >= incrementPrice) {
     data.coin -= incrementPrice;
+    checkBtnCondition(data);
     data.increment++;
     saveGame(data);
     // console.log(data);
@@ -212,13 +219,37 @@ upRankButton.addEventListener("click", () => {
     data.coin >= rankRequirement[data.rankLevel - 1].gold &&
     data.power >= rankRequirement[data.rankLevel - 1].power
   ) {
+    data.coin -= rankRequirement[data.rankLevel - 1].gold;
     data.rankLevel++;
     saveGame(data);
     updateRankProgress(uiElements, data);
+    checkBtnCondition(data);
   }
 });
 
 // console.log(data);
+
+const editNameModal = createEditNameModal();
+// console.log(editNameModal)
+const backEditNameBtn = document.getElementById("back-confirm");
+const inputName = document.getElementById("input-name");
+const confirmButton = document.getElementById("confirm");
+
+editNameBtn.addEventListener("click", () => {
+  editNameModal.classList.toggle("show-content");
+});
+
+backEditNameBtn.addEventListener("click", () => {
+  editNameModal.classList.toggle("show-content");
+});
+
+confirmButton.addEventListener("click", () => {
+  editNameModal.classList.toggle("show-content");
+
+  data.playerName = inputName.value == "" ? "player" : inputName.value;
+  inputName.value = "";
+  name.textContent = data.playerName;
+});
 
 setInterval(() => {
   data.coin += data.cps;
@@ -229,6 +260,7 @@ setInterval(() => {
   renderedGoldCards.goldInfo.querySelector(".gold-info-for-up").textContent =
     data.coin;
   updateRankProgress(uiElements, data);
+  checkBtnCondition(data);
 }, 1000);
 
 updateUI(uiElements, data);

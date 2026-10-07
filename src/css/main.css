@@ -30,6 +30,7 @@ body {
 }
 
 .container {
+  position: relative;
   width: 100%;
   max-width: 500px;
   /* aspect-ratio: 9/16; */
@@ -41,7 +42,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 10px;
+  /* gap: 10px; */
   color: #e6f0ff;
   background-image: url(../assets/background/container-bg.png);
   background-size: cover;
@@ -50,9 +51,23 @@ body {
 }
 
 header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   height: max-content;
   flex-shrink: 0;
+  border-bottom: 1px solid #ffffff50;
+  padding-block: 10px;
+  font-family: Nunito-Sans;
+  font-weight: bolder;
+}
+
+header img {
+  width: clamp(46px, 12vw, 52px);
+  height: clamp(46px, 12vw, 52px);
+  object-fit: contain;
+  border: 3px solid #ffd545;
 }
 
 .content {
@@ -67,12 +82,15 @@ header {
   display: none;
   scrollbar-width: none;
   /* border: 1px solid black; */
+  gap: clamp(10px, 3vw, 16px);
+  padding-bottom: clamp(10px, 3vw, 16px);
 }
 
 .content > * {
   flex-shrink: 0;
 }
 
+/* KINGDOM CONTENT */
 .scoreboard {
   width: 100%;
   height: max-content;
@@ -84,7 +102,7 @@ header {
   font-weight: bold;
   font-family: Nunito-Sans;
   font-weight: 800;
-  font-size: clamp (16px,4.5vw,20px);
+  font-size: clamp (16px, 4.5vw, 20px);
 }
 
 .scoreboard > div {
@@ -117,7 +135,7 @@ header {
 
 #coin-per-sec {
   font-family: Inter;
-  color: #39FF14;
+  color: #39ff14;
   font-weight: 500px;
   width: 100%;
   display: flex;
@@ -130,7 +148,7 @@ header {
 #click-area {
   width: 100%;
   aspect-ratio: 16 / 9;
-  border: 0.5px dashed #e6f0ff;
+  border: 0.1px dashed #e6f0ff50;
   background-image: url(../assets/background/click-bg.png);
   background-position: center;
   background-repeat: no-repeat;
@@ -147,7 +165,7 @@ header {
 
 .click-effect {
   font-size: clamp(6px, 2vw, 12px);
-  color: #39FF14;
+  color: #39ff14;
   animation: fadeUp 0.5s linear;
 }
 
@@ -186,65 +204,179 @@ header {
   }
 }
 
+/* up-income */
 .upgrade-income {
+  padding: clamp(6px, 2vw, 10px);
   width: 100%;
-  height: max-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(circle, #05154550 0%, #15255550 100%);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border: 1px solid #e6f0ff50;
+  gap: clamp(26px, 7vw, 32px);
+  /* border-radius: 6px; */
+}
+
+.upgrade-income > div {
+  width: 100%;
+}
+
+.above {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
-  padding-block: 10px;
-  border: 5px solid #1e2a44 ;
-  padding-inline: 10px;
-  background: #2e3e5c30;
-  backdrop-filter: blur(2px);
-  gap: 10px;
-}
-
-.left {
-  height: 100%;
-  text-align: justify;
-}
-
-.right {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-}
-
-#increment-level, #increment-amount {
-  font-size: clamp(8px, 2.5vw, 12px)!important;
-  font-weight: bold;
-}
-
-.up-income-status {
-  font-family: Inter;
-  display: flex;
-  flex-direction: column;
-  color: #39FF14;
-}
-
-.upgrade-income .text-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.25);
+  overflow: hidden;
 }
 
 #upgrade-income-button {
-  margin-top: 10px;
+  height: 100%;
+  flex: 1;
+  background: transparent;
+  border: none;
+  background-color: #ffd545;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  transition: 0.1s ease-in;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+#upgrade-income-button:disabled {
+  background-color: #656565;
+}
+
+#upgrade-income-button > span {
+  font-family: Inter;
+  text-transform: uppercase;
+  color: #0a1630;
+  font-weight: bold;
+  font-size: clamp(10px, 3vw, 14px);
+}
+
+#upgrade-income-button:active {
+  transform: translateY(2px);
+}
+
+#increment-price {
+  font-family: Inter;
+  background: rgba(5, 21, 69, 0.15);
+  color: #e6f0ff;
+}
+
+.up-income-status {
+  height: 100%;
+  flex: 1;
+  padding: 7px 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+#increment-level {
+  text-transform: uppercase;
+  color: #e6f0ff;
+  font-weight: 700;
+  font-family: Inter;
+  font-size: clamp(10px, 3vw, 14px);
+}
+
+#increment-amount {
+  color: #39ff14;
+  font-weight: 800;
+  font-family: Merriweather-Sans;
+  font-size: clamp(6px, 2vw, 12px);
+}
+
+/* upgrade rank */
+.upgrade-rank {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 5px 12px;
-  font-size: clamp(8px, 3vw, 14px);
+  gap: 20px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid #e6f0ff50;
+  /* border-radius: 6px; */
+  padding-block: clamp(14px, 4vw, 18px);
+  padding-inline: clamp(6px, 2vw, 10px);
+  font-family: Inter;
+  backdrop-filter: blur(3px);
+}
+
+.upgrade-rank > * {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.up-rank-top {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 5px;
+}
+
+.up-rank-top progress {
+  width: 100%;
+  height: clamp(10px, 3vw, 16px);
+  border-radius: 6px;
+  border: 1px solid #e6f0ff50;
+}
+
+.up-rank-top .text-content:nth-child(2) {
+  color: #ffd545;
+}
+
+.up-rank-top .text-content:nth-child(4) {
+  color: skyblue;
+}
+
+.up-rank-top progress:nth-of-type(1)::-webkit-progress-value {
+  background: #ffd545;
+  border-radius: 6px;
+}
+
+.up-rank-top progress:nth-of-type(2)::-webkit-progress-value {
+  background: skyblue;
+  border-radius: 6px;
+}
+
+.up-rank-top progress::-webkit-progress-bar {
+  background: #000;
+  border-radius: 6px;
+}
+
+.up-rank-bottom button {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  background-color: #ffd545;
+  font-family: Inter;
+  text-transform: uppercase;
+  font-size: clamp(10px, 3vw, 14px);
+  font-weight: bold;
+  color: #0a1630;
   cursor: pointer;
-  padding-inline: 20px;
-  font-family: Nunito-Sans;
 }
 
 /* upgrades */
@@ -299,39 +431,53 @@ footer {
   width: 100%;
   height: max-content;
   flex-shrink: 0;
+  padding-top: 10px;
+  border-top: 1px solid #ffffff50;
 }
 
 footer nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  text-transform: uppercase;
 }
 
 footer .nav-list {
+  flex: 1/5;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   font-weight: bold;
-  flex: 1;
-  font-size: clamp(14px, 4vw, 18px);
+  text-align: center;
+  font-family: Nunito-Sans;
+  font-size: clamp(10px, 3.5vw, 16px);
   cursor: pointer;
+  padding: clamp(2px, 1vw, 6px);
+  gap: 7px;
 }
+
+.nav-list img {
+  width: clamp(46px, 12vw, 52px);
+  height: clamp(46px, 12vw, 52px);
+  object-fit: contain;
+}
+
+/* UPGRADES CONTENT */
 
 /* styling text */
 .heading {
   font-weight: bold;
   font-size: clamp(24px, 7vw, 32px);
   font-family: Merriweather-Sans;
-  font-weight: 600;
-  color: #ffd545!important;
   text-transform: capitalize;
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
 .text-content {
-  font-size: clamp(8px, 2.5vw, 14px);
+  font-size: clamp(10px, 3vw, 14px);
   font-family: Inter;
-  text-transform: initial;
+  text-align: justify;
 }
 
 .text-content::first-letter {
@@ -349,5 +495,34 @@ footer .nav-list {
 
 /* nav manipulation */
 .nav-active {
-  color: red;
+  color: #ffd545;
+}
+
+.nav-active img {
+  transform: scale(1.25);
+}
+
+button:disabled {
+  background-color: #656565;
+}
+
+/* modal */
+
+/* edit-name-modal */
+.edit-name-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: url(../assets/background/container-bg.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(8px,2.5vw,12px);
+  display: none;
 }
