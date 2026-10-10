@@ -4,7 +4,7 @@ export const createEditNameModal = () => {
 
     editNameModal.innerHTML = `
     <div class="input-area">
-        <input type="text" id="input-name" autocomplete="off">
+        <input type="text" id="input-name" autocomplete="off" maxlength="10" class="text-content">
     </div>
     <div class="confirm-edit">
         <button id="back-confirm">back</button>

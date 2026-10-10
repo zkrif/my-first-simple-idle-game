@@ -13,18 +13,19 @@ export const checkBtnCondition = (data) => {
     ? (upIncomeBtn.disabled = false)
     : (upIncomeBtn.disabled = true);
 
-  data.coin >= rankRequirement[data.rankLevel - 1].gold &&
-  data.power >= rankRequirement[data.rankLevel - 1].power
-    ? (upRankBtn.disabled = false)
-    : (upRankBtn.disabled = true);
+  let maxLevel = data.rankLevel === rankRequirement.length;
+  let hasEnoughCoin = data.coin >= rankRequirement[data.rankLevel - 1].gold;
+  let hasEnoughPower = data.power >= rankRequirement[data.rankLevel - 1].power;
+
+  upRankBtn.disabled = maxLevel || !(hasEnoughCoin && hasEnoughPower)
 };
 
 export const resetGame = (data) => {
-  localStorage.removeItem("data");
   return {
     playerName: "player",
     coin: 0,
     cps: 0,
+    multiplier: 1,
     increment: 1,
     power: 0,
     powerUpLevel: {

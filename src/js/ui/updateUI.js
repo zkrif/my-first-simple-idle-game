@@ -1,4 +1,5 @@
 import { getIncrementPrice, rankRequirement } from "../data/config.js";
+import { checkBtnCondition } from "../data/control.js";
 
 export const updateCoin = (uiElements, data) => {
   uiElements.coinAmount.textContent = `${data.coin}`;
@@ -27,6 +28,21 @@ export const updateRankProgress = (uiElements, data) => {
   progress.gold.max = rankRequirement[data.rankLevel - 1].gold;
   progress.power.value = data.power;
   progress.power.max = rankRequirement[data.rankLevel - 1].power;
+
+  if (data.rankLevel === rankRequirement.length) {
+    uiElements.goldRequirement.textContent = `Max Level`;
+    uiElements.powerRequirement.textContent = `Max Level`;
+    progress.gold.value = data.coin;
+    progress.gold.max = 0;
+    progress.power.value = data.power;
+    progress.power.max = 0;
+  }
+};
+
+export const updateRank = (uiElements, data) => {
+  const { rank } = uiElements;
+  rank.rankName.textContent = rankRequirement[data.rankLevel - 1].rank;
+  rank.rankImg.src = rankRequirement[data.rankLevel - 1].rankImg;
 };
 
 export const updateProfile = (data) => {
@@ -44,4 +60,6 @@ export const updateUI = (uiElements, data) => {
   updateIncrement(uiElements, data);
   updateCoinPerSec(uiElements, data);
   updateRankProgress(uiElements, data);
+  updateRank(uiElements, data);
+  checkBtnCondition(data);
 };

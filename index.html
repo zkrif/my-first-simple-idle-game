@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -11,9 +11,13 @@
     <div class="container">
       <header>
         <div class="header-left">
-          <img src="src/assets/icons/avatar.png" alt="avatar">
-          <div id="name">default</div>
-          <button id="edit-name-button">edit name</button>
+          <div class="avatar">
+            <img src="src/assets/icons/avatar.png" alt="avatar" />
+          </div>
+          <div class="profile">
+            <div id="name"></div>
+            <button id="edit-name-button">edit name</button>
+          </div>
         </div>
         <div class="header-right">
           <button id="reset-button">reset game</button>
@@ -24,6 +28,9 @@
           <div class="coin">
             <img src="src/assets/icons/coin.png" alt="coin.png" />
             <div id="coin-amount"></div>
+          </div>
+          <div class="rank">
+            <div id="rank-name"></div>
           </div>
           <div class="power">
             <div id="power-amount"></div>
@@ -55,6 +62,9 @@
         </div>
         <div class="upgrade-rank">
           <div class="up-rank-top">
+            <div class="rank-image">
+              <img src="/" alt="rank" id="rank-img" />
+            </div>
             <div class="heading">upgrade rank</div>
             <div class="text-content">
               coin requirements <span id="gold-requirement"></span>
@@ -73,14 +83,23 @@
       <div class="content">
         <div class="nav-upgrade">
           <nav>
-            <div class="nav-upgrade-list">gold</div>
+            <div class="nav-upgrade-list nav-active">gold</div>
             <div class="nav-upgrade-list">power</div>
           </nav>
         </div>
         <div class="upgrade-content show-content" id="gold-up"></div>
         <div class="upgrade-content" id="power-up"></div>
       </div>
-      <div class="content">coming soon</div>
+      <div class="content">
+        <div class="nav-dynasty">
+          <nav>
+            <div class="nav-dynasty-list nav-active">hero</div>
+            <div class="nav-dynasty-list">harem</div>
+          </nav>
+        </div>
+        <div class="dynasty-content show-content-grid" id="hero">coming soon</div>
+        <div class="dynasty-content" id="harem"></div>
+      </div>
       <div class="content">coming soon</div>
       <div class="content">coming soon</div>
       <footer>

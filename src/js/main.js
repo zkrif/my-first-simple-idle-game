@@ -13,6 +13,7 @@ import {
   getIncrementPrice,
   getPowerPrice,
   goldUpgrade,
+  haremList,
   powerUpgrade,
   rankRequirement,
 } from "./data/config.js";
@@ -21,6 +22,7 @@ import {
   createConfirmResetModal,
   createEditNameModal,
 } from "./ui/createModal.js";
+import { renderHaremCard } from "./ui/dynastyCard.js";
 import {
   updateUI,
   updateCoin,
@@ -29,6 +31,7 @@ import {
   updatePower,
   updateRankProgress,
   updateProfile,
+  updateRank,
 } from "./ui/updateUI.js";
 import renderUpgradeCard from "./ui/upgradeCard.js";
 
@@ -44,6 +47,9 @@ const upContent = document.querySelectorAll(".upgrade-content");
 const upRankButton = document.getElementById("up-rank-button");
 const editNameBtn = document.getElementById("edit-name-button");
 const resetBtn = document.getElementById("reset-button");
+const haremContainer = document.getElementById("harem");
+const navDynastyList = document.querySelectorAll(".nav-dynasty-list");
+const dynastyContent = document.querySelectorAll(".dynasty-content");
 
 const uiElements = {
   coinAmount: document.getElementById("coin-amount"),
@@ -60,6 +66,10 @@ const uiElements = {
     gold: document.getElementById("gold-progress"),
     power: document.getElementById("power-progress"),
   },
+  rank: {
+    rankName: document.getElementById("rank-name"),
+    rankImg: document.getElementById("rank-img"),
+  },
 };
 
 let data = JSON.parse(localStorage.getItem("data")) || {
@@ -67,6 +77,7 @@ let data = JSON.parse(localStorage.getItem("data")) || {
   coin: 0,
   cps: 0,
   increment: 1,
+  multiplier: 1,
   power: 0,
   powerUpLevel: {
     1: 1,
@@ -93,7 +104,7 @@ clickArea.addEventListener("pointerdown", (e) => {
   createClickEffect.style.position = "fixed";
   createClickEffect.style.top = `${positionY}px`;
   createClickEffect.style.left = `${positionX}px`;
-  createClickEffect.textContent = `+${data.increment}`;
+  createClickEffect.textContent = `+${Math.round(data.increment * data.multiplier)}`;
   // console.log(createClickEffect);
   clickArea.appendChild(createClickEffect);
 
@@ -101,7 +112,7 @@ clickArea.addEventListener("pointerdown", (e) => {
     clickArea.removeChild(createClickEffect);
   }, 500);
 
-  data.coin += data.increment;
+  data.coin += Math.round(data.increment * data.multiplier);
 
   renderedPowerCards.goldInfo.querySelector(".gold-info-for-up").textContent =
     data.coin;
@@ -213,10 +224,15 @@ renderedGoldCards.cards.forEach((element, index) => {
 
 navUpList.forEach((element, index) => {
   element.addEventListener("click", () => {
+    navUpList.forEach((element) => {
+      element.classList.remove("nav-active");
+    });
+
     upContent.forEach((element) => {
       element.classList.remove("show-content");
     });
     upContent[index].classList.add("show-content");
+    element.classList.add("nav-active");
   });
 });
 
@@ -227,18 +243,22 @@ upRankButton.addEventListener("click", () => {
   ) {
     data.coin -= rankRequirement[data.rankLevel - 1].gold;
     data.rankLevel++;
+    data.multiplier = rankRequirement[data.rankLevel - 1].buffCpc;
+    data.cps += rankRequirement[data.rankLevel - 1].buffCps;
+    checkBtnCondition(data);
+    updateRank(uiElements, data);
     saveGame(data);
     updateRankProgress(uiElements, data);
-    checkBtnCondition(data);
+    updateCoinPerSec(uiElements, data);
   }
 });
 
 // console.log(data);
-
 const editNameModal = createEditNameModal();
 // console.log(editNameModal)
 const backEditNameBtn = document.getElementById("back-confirm");
 const confirmButton = document.getElementById("confirm");
+const inputName = document.getElementById("input-name");
 
 editNameBtn.addEventListener("click", () => {
   editNameModal.classList.toggle("show-content");
@@ -251,6 +271,13 @@ backEditNameBtn.addEventListener("click", () => {
 confirmButton.addEventListener("click", () => {
   editNameModal.classList.toggle("show-content");
   updateProfile(data);
+});
+
+inputName.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    editNameModal.classList.toggle("show-content");
+    updateProfile(data);
+  }
 });
 
 const confirmResetModal = createConfirmResetModal();
@@ -266,11 +293,31 @@ backResetBtn.addEventListener("click", () => {
 });
 
 confirmResetBtn.addEventListener("click", () => {
-  data = resetGame();
+  data = resetGame(data);
   saveGame(data);
   updateUI(uiElements, data);
   confirmResetModal.classList.toggle("show-content");
 });
+
+// next feature for development is harem section first.
+navDynastyList.forEach((element, index) => {
+  element.addEventListener("click", () => {
+    navDynastyList.forEach(element => {
+      element.classList.remove("nav-active")
+    });
+
+    dynastyContent.forEach(element => {
+      element.classList.remove("show-content-grid")
+    })
+
+    dynastyContent[index].classList.add("show-content-grid");
+    element.classList.add("nav-active")
+  });
+});
+
+const renderedHaremCard = renderHaremCard(haremContainer, haremList);
+
+console.log(renderedHaremCard);
 
 setInterval(() => {
   data.coin += data.cps;

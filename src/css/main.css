@@ -70,6 +70,67 @@ header img {
   border: 3px solid #ffd545;
 }
 
+.header-left,
+.header-right {
+  flex: 1;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, 1.5vw, 8px);
+}
+
+.header-left > * {
+  display: flex;
+  height: max-content;
+}
+
+.header-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.profile {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: clamp(6px, 2vw, 10px);
+}
+
+#name {
+  color: #ffd545;
+  font-size: 1.2rem;
+}
+
+header button {
+  padding: clamp(3px, 1vw, 4px) clamp(8px, 2.5vw, 12px);
+  border: none;
+  border-radius: 6px;
+  background-color: #ffd545;
+  color: #0a1630;
+  font-weight: bold;
+  cursor: pointer;
+  width: max-content;
+  text-transform: capitalize;
+  font-family: Inter;
+  font-weight: bold;
+}
+
+#edit-name-button {
+  border: none;
+  color: #ffffff;
+  background-color: transparent;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8em;
+  text-transform: none;
+  padding: 0;
+}
+
 .content {
   display: flex;
   flex-direction: column;
@@ -82,7 +143,7 @@ header img {
   display: none;
   scrollbar-width: none;
   /* border: 1px solid black; */
-  gap: clamp(10px, 3vw, 16px);
+  gap: clamp(8px, 2.5vw, 12px);
   padding-bottom: clamp(10px, 3vw, 16px);
 }
 
@@ -116,6 +177,18 @@ header img {
   justify-content: flex-start;
   align-items: center;
   gap: 10px;
+}
+
+.rank {
+  width: 100%;
+  height: max-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffd545;
+  font-weight: bolder;
+  font-size: clamp(10px, 3vw, 16px);
+  text-transform: capitalize;
 }
 
 .power {
@@ -256,7 +329,7 @@ header img {
 }
 
 #upgrade-income-button:disabled {
-  background-color: #656565;
+  background-color: #656565 !important;
 }
 
 #upgrade-income-button > span {
@@ -336,6 +409,22 @@ header img {
   gap: 5px;
 }
 
+.up-rank-top .rank-image {
+  flex: 1;
+  width: 100%;
+  padding: clamp(16px, 4.5vw, 20px);
+  background-color: #00000050;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ffd54550;
+}
+
+.up-rank-top img {
+  width: clamp(220px, 60vw, 260px);
+  object-fit: contain;
+}
+
 .up-rank-top progress {
   width: 100%;
   height: clamp(10px, 3vw, 16px);
@@ -382,6 +471,7 @@ header img {
 /* upgrades */
 .nav-upgrade {
   width: 100%;
+  height: max-content;
 }
 
 .nav-upgrade nav {
@@ -389,13 +479,20 @@ header img {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid #ffffff50;
 }
 
-.nav-upgrade-list {
+.nav-upgrade-list,
+.nav-dynasty-list {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-block: 10px;
+  text-transform: capitalize;
+  font-family: Nunito-Sans;
+  font-weight: bold;
+  font-size: clamp(12px, 3.5vw, 16px);
 }
 
 .upgrade-content {
@@ -404,6 +501,23 @@ header img {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  gap: clamp(8px, 2.5vw, 10px);
+}
+
+.gold-info-for-upgrades {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #00000050;
+  backdrop-filter: blur(3px);
+  padding: clamp(1px, 0.2vw, 4px);
+}
+
+.gold-info-for-upgrades img {
+  width: clamp(32px, 9vw, 40px);
+  height: clamp(32px, 9vw, 40px);
+  object-fit: contain;
 }
 
 .gold-info-for-up {
@@ -414,17 +528,56 @@ header img {
   align-items: center;
 }
 
-.gold-info-for-up img {
-  width: clamp(32px, 9vw, 40px);
-  height: clamp(32px, 9vw, 40px);
-  object-fit: contain;
-}
-
 .upgrade-card-container {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border: 1px solid #ffffff50;
+  padding: 3px;
+}
+
+/* dynasty */
+.nav-dynasty {
+  width: 100%;
+}
+
+.nav-dynasty nav {
+  width: 100%;
+  display: flex;
+}
+
+.nav-dynasty nav > * {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dynasty-content {
+  display: none!important;
+}
+
+#harem {
+  width: 100%;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(8px,2.5vw,10px);
+}
+
+.harem-progress-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.harem-progress-info > * {
+  width: 100%;
+}
+
+#harem img {
+  width: 100%;
+  border: 1px solid #ffd545;
+  background: #00000080;
+  filter: brightness(0);
 }
 
 footer {
@@ -463,8 +616,6 @@ footer .nav-list {
   object-fit: contain;
 }
 
-/* UPGRADES CONTENT */
-
 /* styling text */
 .heading {
   font-weight: bold;
@@ -490,7 +641,11 @@ footer .nav-list {
 
 /* display manipulation */
 .show-content {
-  display: flex !important;
+  display: flex!important;
+}
+
+.show-content-grid {
+  display: grid!important;
 }
 
 /* nav manipulation */
@@ -523,8 +678,32 @@ button:disabled {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: clamp(8px,2.5vw,12px);
+  gap: clamp(8px, 2.5vw, 12px);
   display: none;
+}
+
+.edit-name-modal button {
+  padding: clamp(3px, 1vw, 5px);
+  border: none;
+  border-radius: 6px;
+  background-color: #ffd545;
+  color: #0a1630;
+  font-weight: bold;
+  cursor: pointer;
+  width: max-content;
+  text-transform: capitalize;
+  font-family: Inter;
+  font-weight: bold;
+}
+
+#input-name {
+  padding: clamp(3px, 1vw, 5px);
+  border: none;
+  outline: none;
+  background-color: #111111;
+  color: #fff;
+  font-family: Nunito-Sans;
+  font-weight: bold;
 }
 
 .reset-modal {
@@ -541,7 +720,21 @@ button:disabled {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: clamp(8px,2.5vw,12px);
+  gap: clamp(8px, 2.5vw, 12px);
   text-align: center;
   display: none;
+}
+
+.reset-modal button {
+  padding: clamp(6px, 2vw, 10px) clamp(18px, 5vw, 22px);
+  border: none;
+  border-radius: 6px;
+  background-color: #ffd545;
+  color: #0a1630;
+  font-weight: bold;
+  cursor: pointer;
+  width: max-content;
+  text-transform: capitalize;
+  font-family: Inter;
+  font-weight: bold;
 }
