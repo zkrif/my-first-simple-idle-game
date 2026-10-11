@@ -12,7 +12,7 @@ const createUpgradeCards = (upgradeData, data, getPrice) => {
               </div>
           </div>
       <div class="right">
-          <button class="upgrade-up-button">
+          <button class="upgrade-up-button" disabled>
               <span>upgrade</span>
               <span class="up-price">${getPrice(upgradeData, data)}</span>
           </button>

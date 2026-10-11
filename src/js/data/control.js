@@ -1,4 +1,11 @@
-import { getIncrementPrice, rankRequirement } from "./config.js";
+import {
+  getGoldPrice,
+  getPowerPrice,
+  getIncrementPrice,
+  goldUpgrade,
+  powerUpgrade,
+  rankRequirement,
+} from "./config.js";
 
 export const saveGame = (data) => {
   localStorage.setItem("data", JSON.stringify(data));
@@ -17,13 +24,31 @@ export const checkBtnCondition = (data) => {
   let hasEnoughCoin = data.coin >= rankRequirement[data.rankLevel - 1].gold;
   let hasEnoughPower = data.power >= rankRequirement[data.rankLevel - 1].power;
 
-  upRankBtn.disabled = maxLevel || !(hasEnoughCoin && hasEnoughPower)
+  upRankBtn.disabled = maxLevel || !(hasEnoughCoin && hasEnoughPower);
+
+  const goldUpContainer = document.getElementById("gold-up")
+  const goldUpBtn = goldUpContainer.querySelectorAll(".upgrade-up-button");
+
+  goldUpBtn.forEach((element, index) => {
+    let hasEnoughGoldPrice =
+      data.coin >= getGoldPrice(goldUpgrade[index], data);
+    element.disabled = !hasEnoughGoldPrice;
+  });
+
+  const powerUpContainer = document.getElementById("power-up")
+  const powerUpBtn = powerUpContainer.querySelectorAll(".upgrade-up-button");
+
+  powerUpBtn.forEach((element, index) => {
+    let hasEnoughPowerPrice =
+      data.coin >= getPowerPrice(powerUpgrade[index], data);
+    element.disabled = !hasEnoughPowerPrice;
+  });
 };
 
 export const resetGame = (data) => {
   return {
     playerName: "player",
-    coin: 0,
+    coin: 250000,
     cps: 0,
     multiplier: 1,
     increment: 1,

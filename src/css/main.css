@@ -493,6 +493,13 @@ header button {
   font-family: Nunito-Sans;
   font-weight: bold;
   font-size: clamp(12px, 3.5vw, 16px);
+  cursor: pointer;
+}
+
+nav .nav-active {
+  background-color: #00000050;
+  backdrop-filter: blur(5px);
+  /* border-inline: 1px solid #ffffff50; */
 }
 
 .upgrade-content {
@@ -512,6 +519,7 @@ header button {
   background: #00000050;
   backdrop-filter: blur(3px);
   padding: clamp(1px, 0.2vw, 4px);
+  gap: clamp(6px,2vw,10px);
 }
 
 .gold-info-for-upgrades img {
@@ -534,7 +542,30 @@ header button {
   justify-content: space-between;
   align-items: center;
   border: 1px solid #ffffff50;
-  padding: 3px;
+  padding: clamp(3px,1vw,6px);
+  background-color: #0a163080;
+  backdrop-filter: blur(3px);
+}
+
+.upgrade-up-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: clamp(60px,20vw,100px);
+  font-size: clamp(10px,3vw,14px);
+  font-weight: bold;
+  border-radius: 6px;
+  padding-block: clamp(3px,1vw,5px);
+  cursor: pointer;
+  background-color: #ffd545;
+  border: none;
+  color: #0a1630;
+  text-transform: capitalize;
+}
+
+.upgrade-up-button:disabled {
+  background-color: #656565;
 }
 
 /* dynasty */
@@ -545,6 +576,7 @@ header button {
 .nav-dynasty nav {
   width: 100%;
   display: flex;
+  border-bottom: 1px solid #ffffff50;
 }
 
 .nav-dynasty nav > * {
@@ -576,7 +608,7 @@ header button {
 #harem img {
   width: 100%;
   border: 1px solid #ffd545;
-  background: #00000080;
+  background: #00000050;
   filter: brightness(0);
 }
 

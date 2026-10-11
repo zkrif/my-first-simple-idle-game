@@ -32,6 +32,7 @@ import {
   updateRankProgress,
   updateProfile,
   updateRank,
+  updateUpgrades,
 } from "./ui/updateUI.js";
 import renderUpgradeCard from "./ui/upgradeCard.js";
 
@@ -69,6 +70,10 @@ const uiElements = {
   rank: {
     rankName: document.getElementById("rank-name"),
     rankImg: document.getElementById("rank-img"),
+  },
+  upgrades: {
+    goldUpContainer: document.getElementById("gold-up"),
+    powerUpContainer: document.getElementById("power-up"),
   },
 };
 
@@ -163,27 +168,19 @@ const renderedPowerCards = renderUpgradeCard(
 
 renderedPowerCards.cards.forEach((element, index) => {
   const powerUpBtn = element.querySelector(".upgrade-up-button");
-  const powerUpLevel = element.querySelector(".up-level");
-  const powerUpPrice = element.querySelector(".up-price");
 
   powerUpBtn.addEventListener("click", () => {
     let price = getPowerPrice(powerUpgrade[index], data);
     if (data.coin >= price) {
       data.coin -= price;
       data.powerUpLevel[powerUpgrade[index].id]++;
-      powerUpLevel.textContent = data.powerUpLevel[powerUpgrade[index].id];
-      powerUpPrice.textContent = getPowerPrice(powerUpgrade[index], data);
+      updateUpgrades(uiElements, data);
       data.power += powerUpgrade[index].amount;
-      renderedPowerCards.goldInfo.querySelector(
-        ".gold-info-for-up",
-      ).textContent = data.coin;
-      renderedGoldCards.goldInfo.querySelector(
-        ".gold-info-for-up",
-      ).textContent = data.coin;
       saveGame(data);
       updatePower(uiElements, data);
       updateCoinPerSec(uiElements, data);
       updateRankProgress(uiElements, data);
+      checkBtnCondition(data);
     }
   });
 });
@@ -197,27 +194,18 @@ const renderedGoldCards = renderUpgradeCard(
 
 renderedGoldCards.cards.forEach((element, index) => {
   const goldUpBtn = element.querySelector(".upgrade-up-button");
-  const goldLevel = element.querySelector(".up-level");
-  const goldUpPrice = element.querySelector(".up-price");
 
   goldUpBtn.addEventListener("click", () => {
     let price = getGoldPrice(goldUpgrade[index], data);
     if (data.coin >= price) {
       data.coin -= price;
-      // console.log(`goldUpBtn[${index}] di klik`);
       data.goldUpLevel[goldUpgrade[index].id]++;
-      goldLevel.textContent = data.goldUpLevel[goldUpgrade[index].id];
-      goldUpPrice.textContent = getGoldPrice(goldUpgrade[index], data);
-      renderedPowerCards.goldInfo.querySelector(
-        ".gold-info-for-up",
-      ).textContent = data.coin;
-      renderedGoldCards.goldInfo.querySelector(
-        ".gold-info-for-up",
-      ).textContent = data.coin;
+      updateUpgrades(uiElements, data);
       data.cps += goldUpgrade[index].amount;
       saveGame(data);
       updateCoinPerSec(uiElements, data);
       updateRankProgress(uiElements, data);
+      checkBtnCondition(data);
     }
   });
 });
@@ -302,22 +290,22 @@ confirmResetBtn.addEventListener("click", () => {
 // next feature for development is harem section first.
 navDynastyList.forEach((element, index) => {
   element.addEventListener("click", () => {
-    navDynastyList.forEach(element => {
-      element.classList.remove("nav-active")
+    navDynastyList.forEach((element) => {
+      element.classList.remove("nav-active");
     });
 
-    dynastyContent.forEach(element => {
-      element.classList.remove("show-content-grid")
-    })
+    dynastyContent.forEach((element) => {
+      element.classList.remove("show-content-grid");
+    });
 
     dynastyContent[index].classList.add("show-content-grid");
-    element.classList.add("nav-active")
+    element.classList.add("nav-active");
   });
 });
 
 const renderedHaremCard = renderHaremCard(haremContainer, haremList);
 
-console.log(renderedHaremCard);
+// console.log(renderedHaremCard);
 
 setInterval(() => {
   data.coin += data.cps;

@@ -160,4 +160,13 @@ export const haremList = [
     coinRequirement: 250000,
     opened: false,
   },
+  {
+    id: 3,
+    name:"c",
+    imgUrl: "src/assets/harems-pic/girl3.png",
+    pointRequirement: 100,
+    buff: "",
+    coinRequirement: 250000,
+    opened: false,
+  },
 ]

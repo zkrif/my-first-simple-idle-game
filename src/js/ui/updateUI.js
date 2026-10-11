@@ -1,4 +1,11 @@
-import { getIncrementPrice, rankRequirement } from "../data/config.js";
+import {
+  getIncrementPrice,
+  rankRequirement,
+  goldUpgrade,
+  powerUpgrade,
+  getGoldPrice,
+  getPowerPrice,
+} from "../data/config.js";
 import { checkBtnCondition } from "../data/control.js";
 
 export const updateCoin = (uiElements, data) => {
@@ -53,12 +60,39 @@ export const updateProfile = (data) => {
   name.textContent = data.playerName;
 };
 
+export const updateUpgrades = (uiElements, data) => {
+  const { upgrades } = uiElements;
+  const goldInfoForGold = upgrades.goldUpContainer.querySelector(".gold-info-for-up");
+  const goldInfoForPower = upgrades.powerUpContainer.querySelector(".gold-info-for-up");
+  const upGoldCardContainer = upgrades.goldUpContainer.querySelectorAll(".upgrade-card-container");
+  const upPowerCardContainer = upgrades.powerUpContainer.querySelectorAll(".upgrade-card-container");
+
+  upGoldCardContainer.forEach((element, index) => {
+    const goldLevel = element.querySelector(".up-level");
+    const goldUpPrice = element.querySelector(".up-price");
+    goldLevel.textContent = data.goldUpLevel[goldUpgrade[index].id];
+    goldUpPrice.textContent = getGoldPrice(goldUpgrade[index], data);
+    goldInfoForPower.textContent = data.coin;
+    goldInfoForGold.textContent = data.coin;
+  });
+
+  upPowerCardContainer.forEach((element, index) => {
+    const powerUpLevel = element.querySelector(".up-level");
+    const powerUpPrice = element.querySelector(".up-price");
+    powerUpLevel.textContent = data.powerUpLevel[powerUpgrade[index].id];
+    powerUpPrice.textContent = getPowerPrice(powerUpgrade[index], data);
+    goldInfoForPower.textContent = data.coin;
+    goldInfoForGold.textContent = data.coin;
+  });
+};
+
 export const updateUI = (uiElements, data) => {
   updateProfile(data);
   updateCoin(uiElements, data);
   updatePower(uiElements, data);
   updateIncrement(uiElements, data);
   updateCoinPerSec(uiElements, data);
+  updateUpgrades(uiElements, data)
   updateRankProgress(uiElements, data);
   updateRank(uiElements, data);
   checkBtnCondition(data);
