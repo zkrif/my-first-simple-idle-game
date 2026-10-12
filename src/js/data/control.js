@@ -26,7 +26,7 @@ export const checkBtnCondition = (data) => {
 
   upRankBtn.disabled = maxLevel || !(hasEnoughCoin && hasEnoughPower);
 
-  const goldUpContainer = document.getElementById("gold-up")
+  const goldUpContainer = document.getElementById("gold-up");
   const goldUpBtn = goldUpContainer.querySelectorAll(".upgrade-up-button");
 
   goldUpBtn.forEach((element, index) => {
@@ -35,7 +35,7 @@ export const checkBtnCondition = (data) => {
     element.disabled = !hasEnoughGoldPrice;
   });
 
-  const powerUpContainer = document.getElementById("power-up")
+  const powerUpContainer = document.getElementById("power-up");
   const powerUpBtn = powerUpContainer.querySelectorAll(".upgrade-up-button");
 
   powerUpBtn.forEach((element, index) => {
@@ -48,7 +48,7 @@ export const checkBtnCondition = (data) => {
 export const resetGame = (data) => {
   return {
     playerName: "player",
-    coin: 250000,
+    coin: 0,
     cps: 0,
     multiplier: 1,
     increment: 1,
@@ -63,7 +63,34 @@ export const resetGame = (data) => {
       2: 1,
       3: 1,
       4: 1,
+      5: 1,
+      6: 1,
     },
     rankLevel: 1,
+    haremIntimacy: {
+      1: 0,
+      2: 0,
+      3: 0,
+    },
   };
+};
+
+export const amountFormat = (coin) => {
+  const formatNum = (num, suffix) => {
+    return parseFloat(num.toFixed(2)) + suffix;
+  };
+
+  if (coin >= 1e33) return formatNum(coin / 1e33, "Dc");
+  if (coin >= 1e30) return formatNum(coin / 1e30, "No");
+  if (coin >= 1e27) return formatNum(coin / 1e27, "Oc");
+  if (coin >= 1e24) return formatNum(coin / 1e24, "Sp");
+  if (coin >= 1e21) return formatNum(coin / 1e21, "Sx");
+  if (coin >= 1e18) return formatNum(coin / 1e18, "Qi");
+  if (coin >= 1e15) return formatNum(coin / 1e15, "Qa");
+  if (coin >= 1e12) return formatNum(coin / 1e12, "T");
+  if (coin >= 1e9) return formatNum(coin / 1e9, "B");
+  if (coin >= 1e6) return formatNum(coin / 1e6, "M");
+  if (coin >= 1e3) return formatNum(coin / 1e3, "k");
+
+  return coin;
 };

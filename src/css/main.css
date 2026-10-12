@@ -32,7 +32,7 @@ body {
 .container {
   position: relative;
   width: 100%;
-  max-width: 500px;
+  max-width: 460px;
   /* aspect-ratio: 9/16; */
   height: 100%;
   margin: 0 auto;
@@ -432,11 +432,11 @@ header button {
   border: 1px solid #e6f0ff50;
 }
 
-.up-rank-top .text-content:nth-child(2) {
+.up-rank-top .text-content:nth-child(3) {
   color: #ffd545;
 }
 
-.up-rank-top .text-content:nth-child(4) {
+.up-rank-top .text-content:nth-child(5) {
   color: skyblue;
 }
 
@@ -483,7 +483,7 @@ header button {
 }
 
 .nav-upgrade-list,
-.nav-dynasty-list {
+.nav-dynasty-list, .nav-shop-list {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -519,7 +519,7 @@ nav .nav-active {
   background: #00000050;
   backdrop-filter: blur(3px);
   padding: clamp(1px, 0.2vw, 4px);
-  gap: clamp(6px,2vw,10px);
+  gap: clamp(6px, 2vw, 10px);
 }
 
 .gold-info-for-upgrades img {
@@ -542,9 +542,14 @@ nav .nav-active {
   justify-content: space-between;
   align-items: center;
   border: 1px solid #ffffff50;
-  padding: clamp(3px,1vw,6px);
+  padding: clamp(3px, 1vw, 6px);
   background-color: #0a163080;
   backdrop-filter: blur(3px);
+}
+
+.upgrade-header {
+  font-size: clamp(18px, 5vw, 24px);
+  font-weight: bold;
 }
 
 .upgrade-up-button {
@@ -552,11 +557,11 @@ nav .nav-active {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: clamp(60px,20vw,100px);
-  font-size: clamp(10px,3vw,14px);
+  width: clamp(60px, 20vw, 100px);
+  font-size: clamp(10px, 3vw, 14px);
   font-weight: bold;
   border-radius: 6px;
-  padding-block: clamp(3px,1vw,5px);
+  padding-block: clamp(3px, 1vw, 5px);
   cursor: pointer;
   background-color: #ffd545;
   border: none;
@@ -587,21 +592,21 @@ nav .nav-active {
 }
 
 .dynasty-content {
-  display: none!important;
+  display: none !important;
 }
 
 #harem {
   width: 100%;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(8px,2.5vw,10px);
+  gap: clamp(8px, 2.5vw, 10px);
 }
 
-.harem-progress-info {
+.dynasty-progress-info {
   display: flex;
   flex-direction: column;
 }
 
-.harem-progress-info > * {
+.dynasty-progress-info > * {
   width: 100%;
 }
 
@@ -611,6 +616,52 @@ nav .nav-active {
   background: #00000050;
   filter: brightness(0);
 }
+
+/* shop */
+
+.nav-shop {
+  width: 100%;
+}
+
+.nav-shop nav {
+  width: 100%;
+  display: flex;
+  border-bottom: 1px solid #ffffff50;
+}
+
+.shop-content {
+  width: 100%;
+  display: none !important;
+  flex-direction: column;
+}
+
+.shop-card {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.shop-left-card {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.shop-right-card {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#intimacy img {
+  width: clamp(32px, 9vw, 40px);
+  height: clamp(32px, 9vw, 40px);
+  object-fit: contain;
+}
+
+
 
 footer {
   width: 100%;
@@ -673,11 +724,11 @@ footer .nav-list {
 
 /* display manipulation */
 .show-content {
-  display: flex!important;
+  display: flex !important;
 }
 
 .show-content-grid {
-  display: grid!important;
+  display: grid !important;
 }
 
 /* nav manipulation */
@@ -687,6 +738,7 @@ footer .nav-list {
 
 .nav-active img {
   transform: scale(1.25);
+  transition: 0.1s linear;
 }
 
 button:disabled {

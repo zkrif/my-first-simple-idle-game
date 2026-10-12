@@ -14,15 +14,22 @@ import {
   getPowerPrice,
   goldUpgrade,
   haremList,
+  intimacyItem,
   powerUpgrade,
   rankRequirement,
 } from "./data/config.js";
-import { checkBtnCondition, resetGame, saveGame } from "./data/control.js";
+import {
+  amountFormat,
+  checkBtnCondition,
+  resetGame,
+  saveGame,
+} from "./data/control.js";
 import {
   createConfirmResetModal,
   createEditNameModal,
 } from "./ui/createModal.js";
-import { renderHaremCard } from "./ui/dynastyCard.js";
+import { renderDynastyCard } from "./ui/dynastyCard.js";
+import { renderShopCard } from "./ui/shopCard.js";
 import {
   updateUI,
   updateCoin,
@@ -33,6 +40,7 @@ import {
   updateProfile,
   updateRank,
   updateUpgrades,
+  updateHaremProgress,
 } from "./ui/updateUI.js";
 import renderUpgradeCard from "./ui/upgradeCard.js";
 
@@ -51,6 +59,9 @@ const resetBtn = document.getElementById("reset-button");
 const haremContainer = document.getElementById("harem");
 const navDynastyList = document.querySelectorAll(".nav-dynasty-list");
 const dynastyContent = document.querySelectorAll(".dynasty-content");
+const navShopList = document.querySelectorAll(".nav-shop-list");
+const shopContent = document.querySelectorAll(".shop-content");
+const intimacyContainer = document.getElementById("intimacy");
 
 const uiElements = {
   coinAmount: document.getElementById("coin-amount"),
@@ -94,8 +105,24 @@ let data = JSON.parse(localStorage.getItem("data")) || {
     2: 1,
     3: 1,
     4: 1,
+    5: 1,
+    6: 1,
   },
   rankLevel: 1,
+  haremIntimacy: {
+    1 : 0,
+    2 : 0,
+    3 : 0,
+  },
+  itemShopAmount : {
+    intimacy: {
+      1 : 0,
+      2 : 0,
+      3 : 0,
+      4 : 0,
+      5 : 0,
+    }
+  }
 };
 
 // event
@@ -128,6 +155,7 @@ clickArea.addEventListener("pointerdown", (e) => {
   //   console.log(data);
   updateCoin(uiElements, data);
   updateRankProgress(uiElements, data);
+  updateHaremProgress(data);
   checkBtnCondition(data);
 });
 
@@ -303,18 +331,50 @@ navDynastyList.forEach((element, index) => {
   });
 });
 
-const renderedHaremCard = renderHaremCard(haremContainer, haremList);
-
+const renderedHaremCard = renderDynastyCard(haremContainer, haremList, data);
 // console.log(renderedHaremCard);
+
+
+navShopList.forEach((element, index) => {
+  element.addEventListener("click", () => {
+    navShopList.forEach((element) => {
+      element.classList.remove("nav-active");
+    });
+
+    shopContent.forEach((element) => {
+      element.classList.remove("show-content");
+    });
+
+    shopContent[index].classList.add("show-content");
+    element.classList.add("nav-active");
+  });
+});
+
+const renderedShopCard = renderShopCard(intimacyContainer, intimacyItem, data);
+
+navShopList.forEach((element, index) => {
+  element.addEventListener("click", () => {
+    navShopList.forEach(element => {
+      element.classList.remove("nav-active")
+    });
+    
+    shopContent.forEach(element => {
+      element.classList.remove("show-content");
+    });
+
+    shopContent[index].classList.add("show-content")
+    element.classList.add("nav-active")
+  })
+});
 
 setInterval(() => {
   data.coin += data.cps;
   saveGame(data);
   updateCoin(uiElements, data);
   renderedPowerCards.goldInfo.querySelector(".gold-info-for-up").textContent =
-    data.coin;
+    amountFormat(data.coin);
   renderedGoldCards.goldInfo.querySelector(".gold-info-for-up").textContent =
-    data.coin;
+    amountFormat(data.coin);
   updateRankProgress(uiElements, data);
   checkBtnCondition(data);
 }, 1000);

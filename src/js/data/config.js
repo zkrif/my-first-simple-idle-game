@@ -12,18 +12,21 @@ export const getIncrementPrice = (data) => {
 export const powerUpgrade = [
   {
     id: "1",
+    name: "Endurance",
     amount: 50,
     basePrice: 500,
     priceGrowth: 1.16,
   },
   {
     id: "2",
+    name: "Intelligence",
     amount: 150,
     basePrice: 1000,
     priceGrowth: 1.17,
   },
   {
     id: "3",
+    name: "Agility",
     amount: 5000,
     basePrice: 50000,
     priceGrowth: 1.18,
@@ -40,23 +43,39 @@ export const getPowerPrice = (upgradeData, data) => {
 export const goldUpgrade = [
   {
     id: "1",
+    name: "Royal Wheat Field",
     amount: 5,
     basePrice: 2500,
   },
   {
     id: "2",
+    name: "Royal Gold Mine",
     amount: 25,
     basePrice: 12000,
   },
   {
     id: "3",
+    name: "Town Bazaar",
     amount: 150,
     basePrice: 70000,
   },
   {
     id: "4",
-    amount: 1200,
-    basePrice: 500000,
+    name: "Imperial Seaport",
+    amount: 500,
+    basePrice: 200000,
+  },
+  {
+    id: "5",
+    name: "Imperial Blacksmith",
+    amount: 1000,
+    basePrice: 375000,
+  },
+  {
+    id: "6",
+    name: "Eternal Treasury",
+    amount: 2000,
+    basePrice: 700000,
   },
 ];
 export const getGoldPrice = (upgradeData, data) => {
@@ -143,30 +162,77 @@ export const rankRequirement = [
 
 export const haremList = [
   {
-    id: 1,
-    name:"a",
+    id: "1",
+    name:"alexandra adeline",
     imgUrl: "src/assets/harems-pic/girl1.png",
     pointRequirement: 100,
-    buff: "",
+    buff: {
+      multiplier : 1.25,
+      cps : 1000,
+    },
     coinRequirement: 250000,
     opened: false,
   },
   {
-    id: 2,
-    name:"b",
+    id: "2",
+    name:"nisha narayana",
     imgUrl: "src/assets/harems-pic/girl2.png",
     pointRequirement: 100,
-    buff: "",
-    coinRequirement: 250000,
+    buff: {
+      multiplier : 2,
+      cps : 500,
+    },
+    coinRequirement: 350000,
     opened: false,
   },
   {
-    id: 3,
-    name:"c",
+    id: "3",
+    name:"victoria claudia",
     imgUrl: "src/assets/harems-pic/girl3.png",
     pointRequirement: 100,
-    buff: "",
-    coinRequirement: 250000,
+    buff: {
+      multiplier : 1.5,
+      cps : 5000,
+    },
+    coinRequirement: 600000,
     opened: false,
   },
+]
+
+export const intimacyItem = [
+  {
+    id : "1",
+    name : "sweet chocolate",
+    imgUrl : "src/assets/icons/sweet-choco.png",
+    intimacyPoint : 2,
+    price: 5000,
+  },
+  {
+    id : "2",
+    name : "flower bouquet",
+    imgUrl : "src/assets/icons/flower-bucket.png",
+    intimacyPoint : 2,
+    price: 5000,
+  },
+  {
+    id : "3",
+    name : "enchanted parfume",
+    imgUrl : "src/assets/icons/parfume.png",
+    intimacyPoint : 2,
+    price: 5000,
+  },
+  {
+    id : "4",
+    name : "royal jewelry",
+    imgUrl : "src/assets/icons/jewelry.png",
+    intimacyPoint : 2,
+    price: 5000,
+  },
+  {
+    id : "5",
+    name : "imperial treasury",
+    imgUrl : "src/assets/icons/imperial-treasury.png",
+    intimacyPoint : 2,
+    price: 5000,
+  }
 ]

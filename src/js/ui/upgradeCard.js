@@ -4,10 +4,10 @@ const createUpgradeCards = (upgradeData, data, getPrice) => {
 
   card.innerHTML = `
       <div class="left">
-          <div class="heading">upgrade</div>
+          <div class="upgrade-header">${upgradeData.name}</div>
               <div class="text-content">
                   <span>increase income</span>
-                  <span class="up-level">${data.powerUpLevel[upgradeData.id]}</span>
+                  <span class="up-level"></span>
                   <span class="up-amount">${upgradeData.amount}</span>
               </div>
           </div>

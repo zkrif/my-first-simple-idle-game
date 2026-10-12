@@ -5,32 +5,33 @@ import {
   powerUpgrade,
   getGoldPrice,
   getPowerPrice,
+  haremList,
 } from "../data/config.js";
-import { checkBtnCondition } from "../data/control.js";
+import { checkBtnCondition, amountFormat } from "../data/control.js";
 
 export const updateCoin = (uiElements, data) => {
-  uiElements.coinAmount.textContent = `${data.coin}`;
+  uiElements.coinAmount.textContent = `${amountFormat(data.coin)}`;
 };
 
 export const updatePower = (uiElements, data) => {
-  uiElements.powerAmount.textContent = `${data.power}`;
+  uiElements.powerAmount.textContent = `${amountFormat(data.power)}`;
 };
 
 export const updateIncrement = (uiElements, data) => {
   const { increment } = uiElements;
-  increment.amount.textContent = `(+${data.increment}/click)`;
-  increment.level.textContent = `level ${data.increment}`;
-  increment.price.textContent = `(${getIncrementPrice(data)})`;
+  increment.amount.textContent = `(+${amountFormat(data.increment)}/click)`;
+  increment.level.textContent = `level ${amountFormat(data.increment)}`;
+  increment.price.textContent = `(${amountFormat(getIncrementPrice(data))})`;
 };
 
 export const updateCoinPerSec = (uiElements, data) => {
-  uiElements.coinPerSec.textContent = `+${data.cps} coin/s`;
+  uiElements.coinPerSec.textContent = `+${amountFormat(data.cps)} coin/s`;
 };
 
 export const updateRankProgress = (uiElements, data) => {
   const { progress } = uiElements;
-  uiElements.goldRequirement.textContent = `${data.coin}/${rankRequirement[data.rankLevel - 1].gold}`;
-  uiElements.powerRequirement.textContent = `${data.power}/${rankRequirement[data.rankLevel - 1].power}`;
+  uiElements.goldRequirement.textContent = `${amountFormat(data.coin)}/${amountFormat(rankRequirement[data.rankLevel - 1].gold)}`;
+  uiElements.powerRequirement.textContent = `${amountFormat(data.power)}/${amountFormat(rankRequirement[data.rankLevel - 1].power)}`;
   progress.gold.value = data.coin;
   progress.gold.max = rankRequirement[data.rankLevel - 1].gold;
   progress.power.value = data.power;
@@ -70,21 +71,41 @@ export const updateUpgrades = (uiElements, data) => {
   upGoldCardContainer.forEach((element, index) => {
     const goldLevel = element.querySelector(".up-level");
     const goldUpPrice = element.querySelector(".up-price");
-    goldLevel.textContent = data.goldUpLevel[goldUpgrade[index].id];
-    goldUpPrice.textContent = getGoldPrice(goldUpgrade[index], data);
-    goldInfoForPower.textContent = data.coin;
-    goldInfoForGold.textContent = data.coin;
+    goldLevel.textContent = `level ${data.goldUpLevel[goldUpgrade[index].id]}`;
+    goldUpPrice.textContent = amountFormat(getGoldPrice(goldUpgrade[index], data));
+    goldInfoForPower.textContent = amountFormat(data.coin);
+    goldInfoForGold.textContent = amountFormat(data.coin);
   });
 
   upPowerCardContainer.forEach((element, index) => {
     const powerUpLevel = element.querySelector(".up-level");
     const powerUpPrice = element.querySelector(".up-price");
-    powerUpLevel.textContent = data.powerUpLevel[powerUpgrade[index].id];
-    powerUpPrice.textContent = getPowerPrice(powerUpgrade[index], data);
-    goldInfoForPower.textContent = data.coin;
-    goldInfoForGold.textContent = data.coin;
+    powerUpLevel.textContent = `level ${data.powerUpLevel[powerUpgrade[index].id]}`;
+    powerUpPrice.textContent = amountFormat(getPowerPrice(powerUpgrade[index], data));
+    goldInfoForPower.textContent = amountFormat(data.coin);
+    goldInfoForGold.textContent = amountFormat(data.coin);
   });
-};
+}; 
+
+export const updateHaremProgress = (data) => {
+  const haremSection = document.getElementById("harem")
+
+  const haremCard = haremSection.querySelectorAll(".dynasty-card");
+
+  
+  haremCard.forEach((element, index) => {
+    const haremPoint = element.querySelector(".point");
+    const haremCoin = element.querySelector(".dynasty-coin");
+    
+    const progress = element.querySelectorAll("progress");
+    
+    progress[1].value = data.coin;
+    progress[0].value = data.haremIntimacy[haremList[index].id];
+
+    haremPoint.textContent = amountFormat(data.haremIntimacy[haremList[index].id]);
+    haremCoin.textContent = amountFormat(data.coin);
+  });
+}
 
 export const updateUI = (uiElements, data) => {
   updateProfile(data);
@@ -96,4 +117,5 @@ export const updateUI = (uiElements, data) => {
   updateRankProgress(uiElements, data);
   updateRank(uiElements, data);
   checkBtnCondition(data);
+  updateHaremProgress(data);
 };
