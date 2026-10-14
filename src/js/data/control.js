@@ -48,7 +48,7 @@ export const checkBtnCondition = (data) => {
 export const resetGame = (data) => {
   return {
     playerName: "player",
-    coin: 0,
+    coin: 20000,
     cps: 0,
     multiplier: 1,
     increment: 1,
@@ -71,6 +71,18 @@ export const resetGame = (data) => {
       1: 0,
       2: 0,
       3: 0,
+    },
+    itemShopAmount: {
+      intimacy: {
+        1: 0,
+        2: 5,
+        3: 0,
+        4: 0,
+        5: 0,
+      },
+      booster: {
+        1: 0,
+      },
     },
   };
 };

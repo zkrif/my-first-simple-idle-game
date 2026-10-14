@@ -483,7 +483,8 @@ header button {
 }
 
 .nav-upgrade-list,
-.nav-dynasty-list, .nav-shop-list {
+.nav-dynasty-list,
+.nav-shop-list {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -514,7 +515,7 @@ nav .nav-active {
 .gold-info-for-upgrades {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   background: #00000050;
   backdrop-filter: blur(3px);
@@ -661,7 +662,22 @@ nav .nav-active {
   object-fit: contain;
 }
 
+/* inventory */
+.inventory-content {
+  width: 100%;
+  background-color: #00000050;
+  height: 100%;
+  padding: clamp(8px, 2.5vw, 12px);
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(8px, 2.5vw, 10px);
+}
 
+.inventory-card img {
+  width: 100%;
+  border: 1px solid #ffd545;
+  background: #000000;
+}
 
 footer {
   width: 100%;
@@ -790,6 +806,7 @@ button:disabled {
   font-weight: bold;
 }
 
+/* reset-modal */
 .reset-modal {
   position: absolute;
   top: 0;
@@ -821,4 +838,30 @@ button:disabled {
   text-transform: capitalize;
   font-family: Inter;
   font-weight: bold;
+}
+
+/* buy-modal */
+.buy-modal {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url(../assets/background/container-bg.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.buy-modal img {
+  width: clamp(46px, 12vw, 52px);
+  height: clamp(46px, 12vw, 52px);
+  object-fit: contain;
+  border: 3px solid #ffd545;
+  background-color: #00000050;
+  backdrop-filter: blur(3px);
 }

@@ -89,9 +89,7 @@ export const updateUpgrades = (uiElements, data) => {
 
 export const updateHaremProgress = (data) => {
   const haremSection = document.getElementById("harem")
-
   const haremCard = haremSection.querySelectorAll(".dynasty-card");
-
   
   haremCard.forEach((element, index) => {
     const haremPoint = element.querySelector(".point");
@@ -107,6 +105,14 @@ export const updateHaremProgress = (data) => {
   });
 }
 
+export const updateShop = (uiElements, data) => {
+  const { goldShopIntContainer } = uiElements.shop;
+  // console.log(goldShopIntContainer);
+  const goldInfoShop = goldShopIntContainer.querySelector(".gold-info-shop");
+
+  goldInfoShop.textContent = amountFormat(data.coin);
+}
+
 export const updateUI = (uiElements, data) => {
   updateProfile(data);
   updateCoin(uiElements, data);
@@ -115,7 +121,8 @@ export const updateUI = (uiElements, data) => {
   updateCoinPerSec(uiElements, data);
   updateUpgrades(uiElements, data)
   updateRankProgress(uiElements, data);
+  updateHaremProgress(data);
+  updateShop(uiElements, data);
   updateRank(uiElements, data);
   checkBtnCondition(data);
-  updateHaremProgress(data);
 };

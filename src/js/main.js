@@ -27,8 +27,10 @@ import {
 import {
   createConfirmResetModal,
   createEditNameModal,
+  createBuyModal,
 } from "./ui/createModal.js";
 import { renderDynastyCard } from "./ui/dynastyCard.js";
+import { renderInventoryCard } from "./ui/inventoryCard.js";
 import { renderShopCard } from "./ui/shopCard.js";
 import {
   updateUI,
@@ -41,6 +43,7 @@ import {
   updateRank,
   updateUpgrades,
   updateHaremProgress,
+  updateShop,
 } from "./ui/updateUI.js";
 import renderUpgradeCard from "./ui/upgradeCard.js";
 
@@ -62,6 +65,7 @@ const dynastyContent = document.querySelectorAll(".dynasty-content");
 const navShopList = document.querySelectorAll(".nav-shop-list");
 const shopContent = document.querySelectorAll(".shop-content");
 const intimacyContainer = document.getElementById("intimacy");
+const inventoryContent = document.querySelector(".inventory-content");
 
 const uiElements = {
   coinAmount: document.getElementById("coin-amount"),
@@ -85,6 +89,9 @@ const uiElements = {
   upgrades: {
     goldUpContainer: document.getElementById("gold-up"),
     powerUpContainer: document.getElementById("power-up"),
+  },
+  shop: {
+    goldShopIntContainer: document.getElementById("intimacy"),
   },
 };
 
@@ -110,19 +117,22 @@ let data = JSON.parse(localStorage.getItem("data")) || {
   },
   rankLevel: 1,
   haremIntimacy: {
-    1 : 0,
-    2 : 0,
-    3 : 0,
+    1: 0,
+    2: 0,
+    3: 0,
   },
-  itemShopAmount : {
+  itemShopAmount: {
     intimacy: {
-      1 : 0,
-      2 : 0,
-      3 : 0,
-      4 : 0,
-      5 : 0,
-    }
-  }
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 0,
+      5: 0,
+    },
+    booster: {
+      1: 0,
+    },
+  },
 };
 
 // event
@@ -156,6 +166,7 @@ clickArea.addEventListener("pointerdown", (e) => {
   updateCoin(uiElements, data);
   updateRankProgress(uiElements, data);
   updateHaremProgress(data);
+  updateShop(uiElements, data);
   checkBtnCondition(data);
 });
 
@@ -208,6 +219,8 @@ renderedPowerCards.cards.forEach((element, index) => {
       updatePower(uiElements, data);
       updateCoinPerSec(uiElements, data);
       updateRankProgress(uiElements, data);
+      updateHaremProgress(data);
+      updateShop(uiElements, data);
       checkBtnCondition(data);
     }
   });
@@ -233,6 +246,8 @@ renderedGoldCards.cards.forEach((element, index) => {
       saveGame(data);
       updateCoinPerSec(uiElements, data);
       updateRankProgress(uiElements, data);
+      updateHaremProgress(data);
+      updateShop(uiElements, data);
       checkBtnCondition(data);
     }
   });
@@ -265,6 +280,8 @@ upRankButton.addEventListener("click", () => {
     updateRank(uiElements, data);
     saveGame(data);
     updateRankProgress(uiElements, data);
+    updateHaremProgress(data);
+    updateShop(uiElements, data);
     updateCoinPerSec(uiElements, data);
   }
 });
@@ -334,7 +351,6 @@ navDynastyList.forEach((element, index) => {
 const renderedHaremCard = renderDynastyCard(haremContainer, haremList, data);
 // console.log(renderedHaremCard);
 
-
 navShopList.forEach((element, index) => {
   element.addEventListener("click", () => {
     navShopList.forEach((element) => {
@@ -354,17 +370,83 @@ const renderedShopCard = renderShopCard(intimacyContainer, intimacyItem, data);
 
 navShopList.forEach((element, index) => {
   element.addEventListener("click", () => {
-    navShopList.forEach(element => {
-      element.classList.remove("nav-active")
+    navShopList.forEach((element) => {
+      element.classList.remove("nav-active");
     });
-    
-    shopContent.forEach(element => {
+
+    shopContent.forEach((element) => {
       element.classList.remove("show-content");
     });
 
-    shopContent[index].classList.add("show-content")
-    element.classList.add("nav-active")
-  })
+    shopContent[index].classList.add("show-content");
+    element.classList.add("nav-active");
+  });
+});
+
+const renderedInventoryCard = renderInventoryCard(
+  inventoryContent,
+  intimacyItem,
+  data,
+);
+
+const buyModal = createBuyModal();
+const confirmBuyBtn = document.querySelector(".confirm-buy");
+const backBuyBtn = document.querySelector(".back-buy");
+const addItemBtn = document.querySelector(".add-item");
+const removeItemBtn = document.querySelector(".remove-item");
+const inputItem = document.querySelector(".input-item-area");
+// console.log(backBuyBtn)
+// console.log(confirmBuyBtn)
+// console.log(renderedShopCard);
+
+renderedShopCard.cards.forEach((element, index) => {
+  const itemShopBtn = element.querySelector(".item-shop-button");
+  // console.log(buyModal)
+  // console.log(itemShopBtn);
+  const img = buyModal.querySelector(".buy-modal-top img");
+  const name = buyModal.querySelector(".modal-shop-name");
+  const price = buyModal.querySelector(".modal-shop-price");
+  const amount = buyModal.querySelector(".modal-shop-amount");
+
+  // console.log(name)
+  // console.log(price)
+  // console.log(amount)
+
+  itemShopBtn.addEventListener("click", () => {
+    buyModal.classList.toggle("show-content");
+
+    confirmBuyBtn.addEventListener("click", () => {
+      data.itemShopAmount.intimacy[index + 1] += parseInt(inputItem.value);
+      inputItem.value = 0;
+      console.log(inputItem.value);
+    });
+    
+    img.src = intimacyItem[index].imgUrl;
+    name.textContent = intimacyItem[index].name;
+    price.textContent = intimacyItem[index].price;
+    amount.textContent = intimacyItem[index].intimacyPoint;
+  });
+});
+
+backBuyBtn.addEventListener("click", () => {
+  buyModal.classList.toggle("show-content");
+});
+
+confirmBuyBtn.addEventListener("click", () => {
+  buyModal.classList.toggle("show-content");
+});
+
+addItemBtn.addEventListener("click", () => {
+  // console.log(inputItem.value);
+  const value = inputItem.value++;
+  inputItem.textContent = value;
+});
+
+removeItemBtn.addEventListener("click", () => {
+  // console.log(inputItem.value);
+  if (inputItem.value == 0) return;
+  const value = inputItem.value--;
+  inputItem.textContent = value;
 });
 
 setInterval(() => {
@@ -376,6 +458,8 @@ setInterval(() => {
   renderedGoldCards.goldInfo.querySelector(".gold-info-for-up").textContent =
     amountFormat(data.coin);
   updateRankProgress(uiElements, data);
+  updateHaremProgress(data);
+  updateShop(uiElements, data);
   checkBtnCondition(data);
 }, 1000);
 

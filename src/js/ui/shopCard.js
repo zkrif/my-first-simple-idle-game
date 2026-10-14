@@ -1,16 +1,19 @@
+import { amountFormat } from "../data/control.js";
+
 export const createShopCard = (shopData, data) => {
+  // const { intimacy } = data.itemShopAmount;
 
-    // const { intimacy } = data.itemShopAmount;
+  const card = document.createElement("div");
+  card.className = "shop-card";
 
-    const card = document.createElement("div");
-    card.className = "shop-card"
-
-    card.innerHTML = `
+  
+  card.innerHTML = `
         <div class="shop-left-card">
             <img src="${shopData.imgUrl}" />
             <div class="shop-card-description">
-                <div class = "item-shop-name">${shopData.name}</div>
-                <div class = "item-shop-price">${shopData.price}</div>
+                <div class = "item-shop-name">${amountFormat(shopData.name)}</div>
+                <div class = "item-shop-price">${amountFormat(shopData.price)}</div>
+                <div class = "item-shop-price">intimacy: ${amountFormat(shopData.intimacyPoint)}</div>
                 <div class = "item-shop-amount"></div>
             </div>
         </div>
@@ -19,17 +22,27 @@ export const createShopCard = (shopData, data) => {
         </div>
     `;
 
-    return card;
-}
+  return card;
+};
 
 export const renderShopCard = (container, shopData, data) => {
-    const cards = []
+  const cards = [];
 
-    shopData.forEach(element => {
-        const card = createShopCard(element, data);
-        container.appendChild(card);
-        cards.push(card);
-    });
+  const goldInfo = document.createElement("div");
+  goldInfo.className = "gold-info-for-upgrades";
+  goldInfo.innerHTML = `
+    <img src="src/assets/icons/coin.png" alt="coin.png">
+    <div class="gold-info-shop">${amountFormat(data.coin)}</div>
+    `;
+  container.appendChild(goldInfo);
 
-    return cards;
-}
+  shopData.forEach((element, index) => {
+    const card = createShopCard(element, data);
+    const itemShopAmount = card.querySelector(".item-shop-amount");
+    itemShopAmount.textContent = `${data.itemShopAmount.intimacy[index + 1]}`;
+    container.appendChild(card);
+    cards.push(card);
+  });
+
+  return { cards, goldInfo };
+};
